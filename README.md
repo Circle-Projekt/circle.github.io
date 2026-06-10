@@ -1,3 +1,3 @@
 # circle.github.io
 
-![Roadmap](canvas.png)
+![Roadmap](images/canvas.png)
