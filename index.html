@@ -160,6 +160,14 @@
   .milestone h3 { font-size: 1.1rem; margin: 4px 0 6px; }
   .milestone p { font-size: 15.5px; }
 
+  .milestone-list {
+  margin: 10px 0 0 18px;
+  color: var(--muted);
+  font-size: 15px;
+  }
+  .milestone-list li { margin-bottom: 5px; }
+  .milestone-list li::marker { color: var(--accent); }
+
   /* ---------- Team ---------- */
   .team {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -307,33 +315,52 @@
   <div class="wrap">
     <div class="section-label">Roadmap</div>
     <h2>So geht es weiter</h2>
-    <p>Unser Plan in groben Etappen, erledigte Schritte sind ausgefüllt markiert.</p>
+    <p>Von der ersten Machbarkeitsstudie bis zur smarten Tauschhütte mit Upcycling-Ideen, unser Plan in vier Etappen.</p>
     <div class="timeline">
+
       <div class="milestone done">
-        <span class="when">Phase 1 · in Arbeit</span>
-        <h3>Konzept &amp; Projektstart</h3>
-        <p>Idee ausgearbeitet, Repository angelegt, Anforderungen und Technologie-Stack festgelegt.</p>
+        <span class="when">Meilenstein 1 · in Arbeit</span>
+        <h3>Minimal Viable Prototype</h3>
+        <p>Der erste Wurf: ein Proof of Concept, der zeigt, dass die Idee technisch funktioniert.</p>
+        <ul class="milestone-list">
+          <li>Proof of Concept für den Kern-Workflow (Foto → Erkennung → Inventar)</li>
+          <li>Machbarkeitstest der Abläufe an realistischen Beispielobjekten</li>
+        </ul>
       </div>
+
       <div class="milestone">
-        <span class="when">Phase 2 · geplant</span>
-        <h3>KI-Modell für die Objekterkennung</h3>
-        <p>Auswahl und Training des Klassifikationsmodells, erste Tests mit typischen Tauschhütten-Objekten.</p>
+        <span class="when">Meilenstein 2 · geplant</span>
+        <h3>Release 1 – Die smarte Basis</h3>
+        <p>Aus dem Prototyp wird eine nutzbare App mit allen Kernfunktionen.</p>
+        <ul class="milestone-list">
+          <li>KI-unterstützte Objekterkennung mit automatischer Kategorisierung</li>
+          <li>Durchdachtes User-Interface-Design für die PWA</li>
+          <li>Bestätigungssystem: Ist der Gegenstand noch vor Ort? Nutzer:innen halten das Inventar aktuell</li>
+        </ul>
       </div>
+
       <div class="milestone">
-        <span class="when">Phase 3 · geplant</span>
-        <h3>PWA-Prototyp</h3>
-        <p>Kamera-Integration, Upload-Flow und Online-Inventar als funktionierender Prototyp.</p>
+        <span class="when">Meilenstein 3 · geplant</span>
+        <h3>Release 2 – Mehr als nur Inventar</h3>
+        <p>Circle wird schlauer und lernt aus dem Feedback der Community.</p>
+        <ul class="milestone-list">
+          <li>Dashboard mit Statistiken: Was wird getauscht, was bleibt liegen?</li>
+          <li>Einarbeitung von Nutzer-Feedback aus Release 1</li>
+          <li>KI-gestützte Vorschläge für Upcycling, aus alt mach neu</li>
+          <li>Hervorhebung außergewöhnlicher Gegenstände, damit Schätze nicht übersehen werden</li>
+        </ul>
       </div>
+
       <div class="milestone">
-        <span class="when">Phase 4 · geplant</span>
-        <h3>Test an einer echten Tauschhütte</h3>
-        <p>Praxistest mit echten Nutzer:innen, Feedback sammeln und einarbeiten.</p>
+        <span class="when">Meilenstein 4 · Vision</span>
+        <h3>Aussicht</h3>
+        <p>
+          Wohin die Reise gehen könnte: mehrere Tauschhütten in einem Netzwerk verbinden,
+          Suchaufträge über Hütten hinweg, Benachrichtigungen bei neuen Fundstücken –
+          und vielleicht irgendwann eine Karte aller smarten Tauschhütten der Stadt.
+        </p>
       </div>
-      <div class="milestone">
-        <span class="when">Phase 5 · geplant</span>
-        <h3>Veröffentlichung</h3>
-        <p>Die erste stabile Version von Circle geht offiziell an den Start.</p>
-      </div>
+
     </div>
   </div>
 </section>
@@ -346,7 +373,7 @@
     <div class="team">
       <div class="member">
         <div class="avatar" aria-hidden="true">A</div>
-        <h3>Lucas Fließ<h3>
+        <h3>Lucas Fließ</h3>
         <p>Rolle im Projekt</p>
       </div>
       <div class="member">
