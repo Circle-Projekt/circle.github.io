@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galerie – Circle</title>
+<meta name="description" content="Bilder aus dem Circle-Projekt: Eindrücke von Tauschhütten, Prototypen und dem Team bei der Arbeit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdfdfc;
+    --surface: #f4f5f3;
+    --ink: #181c1b;
+    --muted: #5d6562;
+    --line: #e3e6e4;
+    --accent: #0e7c6b;
+    --accent-soft: #e2f1ee;
+    --radius: 14px;
+    --maxw: 860px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 17px;
+  }
+
+  h1, h2 { font-family: 'Sora', sans-serif; line-height: 1.15; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Navigation ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(253,253,252,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 18px; color: var(--ink);
+  }
+  .brand:hover { text-decoration: none; }
+  .brand-ring {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 3px solid var(--accent); display: inline-block;
+  }
+  .nav-links { display: flex; gap: 22px; font-size: 15px; }
+  .nav-links a { color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .nav-links a.active { color: var(--accent); font-weight: 500; }
+
+  /* ---------- Kopfbereich ---------- */
+  header.page-head { padding: 80px 0 56px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: ""; width: 9px; height: 9px; border-radius: 50%;
+    border: 2px solid var(--accent);
+  }
+  .page-head h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 16px; }
+  .page-head p { color: var(--muted); max-width: 56ch; }
+
+  /* ---------- Galerie ---------- */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding-bottom: 80px;
+  }
+  .gallery figure {
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+  .gallery button.tile {
+    display: block; width: 100%; border: none; padding: 0;
+    background: var(--surface); border-radius: var(--radius);
+    overflow: hidden; cursor: pointer; text-align: left;
+  }
+  .gallery img {
+    display: block; width: 100%; aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+  .gallery button.tile:hover img { transform: scale(1.03); }
+  .gallery figcaption {
+    font-size: 14px; color: var(--muted); padding: 10px 14px 12px;
+  }
+
+  .gallery-empty {
+    grid-column: 1 / -1;
+    background: var(--surface); border-radius: var(--radius);
+    padding: 40px 28px; text-align: center; color: var(--muted);
+  }
+
+  /* ---------- Lightbox ---------- */
+  dialog.lightbox {
+    border: none; padding: 0; background: transparent;
+    max-width: min(92vw, 1100px); max-height: 90vh;
+    margin: auto;        /* zentriert den Dialog – wird sonst vom *-Reset oben entfernt */
+    overflow: visible;   /* damit der Schließen-Button nicht abgeschnitten wird */
+  }
+  dialog.lightbox::backdrop { background: rgba(24,28,27,0.82); }
+  .lightbox-inner { position: relative; }
+  .lightbox img {
+    display: block; max-width: min(92vw, 1100px); max-height: 82vh;
+    border-radius: var(--radius); margin: 0 auto;
+  }
+  .lightbox figcaption {
+    color: #fff; text-align: center; font-size: 14px; padding-top: 12px;
+  }
+  .lightbox-close {
+    position: absolute; top: 10px; right: 10px;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: none; background: #fff; color: var(--ink);
+    font-size: 18px; cursor: pointer; line-height: 1;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  }
+  .lightbox-close:hover { background: var(--accent-soft); color: var(--accent); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line); padding: 36px 0 48px;
+    font-size: 14px; color: var(--muted);
+  }
+  .footer-inner {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: space-between; align-items: center;
+  }
+
+  @media (max-width: 560px) {
+    .nav-links { gap: 14px; }
+    header.page-head { padding: 56px 0 40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .gallery img { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="brand-ring" aria-hidden="true"></span>Circle</a>
+    <div class="nav-links">
+      <a href="index.html#ueber">Über</a>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#roadmap">Roadmap</a>
+      <a href="index.html#team">Team</a>
+      <a href="galerie.html" class="active" aria-current="page">Galerie</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-head wrap">
+  <span class="eyebrow">Galerie</span>
+  <h1>Einblicke ins Projekt</h1>
+  <p>
+    Eindrücke aus dem Circle-Projekt: Tauschhütten, Prototypen, Skizzen
+    und das Team bei der Arbeit.
+  </p>
+</header>
+
+<main class="wrap">
+  <div class="gallery" id="gallery">
+    <!-- Die Bilder werden per JavaScript aus der Liste unten eingefügt. -->
+    <div class="gallery-empty" id="galleryEmpty">
+      Noch keine Bilder eingetragen. Bilder in den Ordner <code>images/</code> legen
+      und unten im Script in die Liste aufnehmen.
+    </div>
+  </div>
+</main>
+
+<dialog class="lightbox" id="lightbox">
+  <figure class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Schließen">✕</button>
+    <img id="lightboxImg" src="" alt="">
+    <figcaption id="lightboxCaption"></figcaption>
+  </figure>
+</dialog>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>2026 Circle-Projekt · Studienprojekt</span>
+    <a href="index.html">← Zurück zur Startseite</a>
+  </div>
+</footer>
+
+<script>
+  const bilder = [
+    { src: "images/eingangstor.png", caption: "Standort der Tauschhütte in der Schleswiger Straße" },
+    { src: "images/panorama.png", caption: "Panorama des Recyclinghofs Schleswiger Straße" },
+    { src: "images/selfie.png", caption: "Besuch vor Ort für Interviews mit Nutzern der Tauschhütte" },
+  ];
+
+  const gallery  = document.getElementById("gallery");
+  const emptyMsg = document.getElementById("galleryEmpty");
+  const lightbox = document.getElementById("lightbox");
+  const lbImg    = document.getElementById("lightboxImg");
+  const lbCap    = document.getElementById("lightboxCaption");
+
+  if (bilder.length > 0) {
+    emptyMsg.remove();
+    for (const bild of bilder) {
+      const tile = document.createElement("button");
+      tile.className = "tile";
+      tile.type = "button";
+      tile.setAttribute("aria-label", "Bild vergrößern: " + (bild.caption || bild.src));
+
+      const fig = document.createElement("figure");
+      const img = document.createElement("img");
+      img.src = bild.src;
+      img.alt = bild.caption || "";
+      img.loading = "lazy";
+      fig.appendChild(img);
+
+      if (bild.caption) {
+        const cap = document.createElement("figcaption");
+        cap.textContent = bild.caption;
+        fig.appendChild(cap);
+      }
+
+      tile.appendChild(fig);
+      tile.addEventListener("click", () => {
+        lbImg.src = bild.src;
+        lbImg.alt = bild.caption || "";
+        lbCap.textContent = bild.caption || "";
+        lightbox.showModal();
+      });
+      gallery.appendChild(tile);
+    }
+  }
+
+  document.getElementById("lightboxClose").addEventListener("click", () => lightbox.close());
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) lightbox.close();
+  });
+</script>
+
+</body>
+</html>
