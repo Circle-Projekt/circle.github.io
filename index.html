@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circle – Die smarte Tauschhütte</title>
+<meta name="description" content="Circle macht Tauschhütten digital: Objekte mit der Handykamera aufnehmen, KI-gestützt klassifizieren und im Online-Inventar finden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdfdfc;
+    --surface: #f4f5f3;
+    --ink: #181c1b;
+    --muted: #5d6562;
+    --line: #e3e6e4;
+    --accent: #0e7c6b;
+    --accent-soft: #e2f1ee;
+    --radius: 14px;
+    --maxw: 860px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 17px;
+  }
+
+  h1, h2, h3 { font-family: 'Sora', sans-serif; line-height: 1.15; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Navigation ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(253,253,252,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 18px; color: var(--ink);
+  }
+  .brand:hover { text-decoration: none; }
+  .brand-ring {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 3px solid var(--accent); display: inline-block;
+  }
+  .nav-links { display: flex; gap: 22px; font-size: 15px; }
+  .nav-links a { color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+
+  /* ---------- Hero ---------- */
+  header.hero { padding: 96px 0 80px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 20px;
+  }
+  .eyebrow::before {
+    content: ""; width: 9px; height: 9px; border-radius: 50%;
+    border: 2px solid var(--accent);
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    font-weight: 700; max-width: 18ch; margin-bottom: 22px;
+  }
+  .hero h1 .dot { color: var(--accent); }
+  .hero p.lead {
+    font-size: 1.18rem; color: var(--muted); max-width: 56ch; margin-bottom: 34px;
+  }
+  .btn {
+    display: inline-block; padding: 12px 26px; border-radius: 999px;
+    background: var(--accent); color: #fff; font-weight: 500; font-size: 15.5px;
+    transition: background 0.15s ease;
+  }
+  .btn:hover { background: #0a6356; text-decoration: none; }
+  .btn.ghost {
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--line); margin-left: 10px;
+  }
+  .btn.ghost:hover { background: var(--surface); }
+
+  /* ---------- Ablauf (So funktioniert's) ---------- */
+  .steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px; margin-top: 36px;
+  }
+  .step { position: relative; padding: 26px 22px; background: var(--surface); border-radius: var(--radius); }
+  .step .num {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 2px solid var(--accent); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif; font-weight: 600; font-size: 15px;
+    margin-bottom: 14px;
+  }
+  .step h3 { font-size: 1.02rem; margin-bottom: 6px; }
+  .step p { font-size: 15px; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 72px 0; border-top: 1px solid var(--line); }
+  .section-label {
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  section h2 { font-size: 1.8rem; margin-bottom: 22px; }
+  section p { color: var(--muted); max-width: 62ch; }
+  section p + p { margin-top: 14px; }
+
+  /* ---------- Features ---------- */
+  .features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px; margin-top: 36px;
+  }
+  .feature {
+    background: var(--surface); border-radius: var(--radius); padding: 26px 24px;
+  }
+  .feature h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .feature p { font-size: 15px; }
+  .feature .icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; margin-bottom: 16px;
+  }
+
+  /* ---------- Roadmap ---------- */
+  .timeline { margin-top: 40px; position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px;
+    width: 2px; background: var(--line);
+  }
+  .milestone { position: relative; padding-bottom: 38px; }
+  .milestone:last-child { padding-bottom: 0; }
+  .milestone::before {
+    content: ""; position: absolute; left: -30px; top: 5px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--bg); border: 3px solid var(--accent);
+  }
+  .milestone.done::before { background: var(--accent); }
+  .milestone .when {
+    font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
+  }
+  .milestone h3 { font-size: 1.1rem; margin: 4px 0 6px; }
+  .milestone p { font-size: 15.5px; }
+
+  /* ---------- Team ---------- */
+  .team {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px; margin-top: 36px;
+  }
+  .member {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 20px; text-align: center;
+  }
+  .member .avatar {
+    width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif; font-weight: 600; font-size: 20px;
+  }
+  .member h3 { font-size: 1rem; }
+  .member p { font-size: 14px; margin-top: 2px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line); padding: 36px 0 48px;
+    font-size: 14px; color: var(--muted);
+  }
+  .footer-inner {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: space-between; align-items: center;
+  }
+
+  @media (max-width: 560px) {
+    .nav-links { display: none; }
+    header.hero { padding: 64px 0 56px; }
+    .btn.ghost { margin-left: 0; margin-top: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="brand-ring" aria-hidden="true"></span>Circle</a>
+    <div class="nav-links">
+      <a href="#ueber">Über</a>
+      <a href="#features">Features</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#team">Team</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <span class="eyebrow">Uni-Projekt · Progressive Web App</span>
+  <h1>Die Tauschhütte wird smart<span class="dot">.</span></h1>
+  <p class="lead">
+    Circle bringt Tauschhütten ins Netz: Einfach das Objekt mit der Handykamera
+    aufnehmen. Unsere KI erkennt, was es ist, ordnet es automatisch der richtigen
+    Kategorie zu und trägt es ins Online-Inventar der Hütte ein. So weiß jeder,
+    was gerade zum Tauschen bereitsteht, bevor er hingeht.
+  </p>
+  <a class="btn" href="https://github.com/Circle-Projekt" target="_blank" rel="noopener">Auf GitHub ansehen</a>
+  <a class="btn ghost" href="#roadmap">Zur Roadmap</a>
+</header>
+
+<section id="ueber">
+  <div class="wrap">
+    <div class="section-label">Über das Projekt</div>
+    <h2>Worum geht es bei Circle?</h2>
+    <p>
+      Tauschhütten sind eine großartige Idee: Was man nicht mehr braucht, stellt man
+      hinein und nimmt mit, was man gebrauchen kann. Das Problem: Niemand weiß,
+      was gerade drin ist. Man läuft hin und findet vielleicht nichts Passendes,
+      während das gesuchte Buch in der Hütte zwei Straßen weiter liegt.
+    </p>
+    <p>
+      Genau hier setzt Circle an. Wer ein Objekt in die Tauschhütte legt, fotografiert
+      es vorher kurz mit dem Smartphone. Eine KI-gestützte Objekterkennung
+      klassifiziert das Bild, ordnet das Objekt automatisch einer Kategorie zu
+      (z.&nbsp;B. Bücher, Spielzeug, Haushalt) und nimmt es ins digitale Inventar auf.
+      Wird etwas herausgenommen, wird es wieder aus der Liste entfernt.
+    </p>
+    <p>
+      Circle entsteht als Studienprojekt und wird als Progressive Web App (PWA)
+      umgesetzt, läuft also direkt im Browser auf jedem Smartphone, ganz ohne
+      App-Store und Installation.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Fotografieren</h3>
+        <p>Objekt mit der Handykamera direkt in der PWA aufnehmen.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Klassifizieren</h3>
+        <p>Die KI erkennt das Objekt und schlägt die passende Kategorie vor.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Reinlegen</h3>
+        <p>Das Objekt landet in der Hütte und gleichzeitig im Online-Inventar.</p>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <h3>Finden &amp; tauschen</h3>
+        <p>Andere stöbern online im Inventar und holen sich, was sie brauchen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-label">Features</div>
+    <h2>Das kann Circle</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="icon" aria-hidden="true">◉</div>
+        <h3>KI-Objekterkennung</h3>
+        <p>Ein Foto genügt: Das Objekt wird automatisch erkannt und klassifiziert, kein mühsames Eintippen nötig.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">◐</div>
+        <h3>Automatische Kategorien</h3>
+        <p>Bücher, Kleidung, Spielzeug, Haushalt: Jedes Objekt landet automatisch in der richtigen Kategorie.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">○</div>
+        <h3>Online-Inventar</h3>
+        <p>Der aktuelle Inhalt der Tauschhütte ist jederzeit online einsehbar, stöbern von zu Hause aus.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">◎</div>
+        <h3>PWA – ohne Installation</h3>
+        <p>Circle läuft als Progressive Web App direkt im Browser auf jedem Smartphone. Kein App-Store, kein Download.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="section-label">Roadmap</div>
+    <h2>So geht es weiter</h2>
+    <p>Unser Plan in groben Etappen, erledigte Schritte sind ausgefüllt markiert.</p>
+    <div class="timeline">
+      <div class="milestone done">
+        <span class="when">Phase 1 · in Arbeit</span>
+        <h3>Konzept &amp; Projektstart</h3>
+        <p>Idee ausgearbeitet, Repository angelegt, Anforderungen und Technologie-Stack festgelegt.</p>
+      </div>
+      <div class="milestone">
+        <span class="when">Phase 2 · geplant</span>
+        <h3>KI-Modell für die Objekterkennung</h3>
+        <p>Auswahl und Training des Klassifikationsmodells, erste Tests mit typischen Tauschhütten-Objekten.</p>
+      </div>
+      <div class="milestone">
+        <span class="when">Phase 3 · geplant</span>
+        <h3>PWA-Prototyp</h3>
+        <p>Kamera-Integration, Upload-Flow und Online-Inventar als funktionierender Prototyp.</p>
+      </div>
+      <div class="milestone">
+        <span class="when">Phase 4 · geplant</span>
+        <h3>Test an einer echten Tauschhütte</h3>
+        <p>Praxistest mit echten Nutzer:innen, Feedback sammeln und einarbeiten.</p>
+      </div>
+      <div class="milestone">
+        <span class="when">Phase 5 · geplant</span>
+        <h3>Veröffentlichung</h3>
+        <p>Die erste stabile Version von Circle geht offiziell an den Start.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <div class="section-label">Team &amp; Kontakt</div>
+    <h2>Wer hinter Circle steckt</h2>
+    <p>Circle entsteht als Studienprojekt </p>
+    <div class="team">
+      <div class="member">
+        <div class="avatar" aria-hidden="true">A</div>
+        <h3>Lucas Fließ<h3>
+        <p>Rolle im Projekt</p>
+      </div>
+      <div class="member">
+        <div class="avatar" aria-hidden="true">B</div>
+        <h3>Nathanael Schwenke</h3>
+        <p>Rolle im Projekt</p>
+      </div>
+      <div class="member">
+        <div class="avatar" aria-hidden="true">C</div>
+        <h3>Malte Siebeneck</h3>
+        <p>Rolle im Projekt</p>
+      </div>
+    </div>
+    <p style="margin-top: 32px;">
+      Fragen oder Ideen? Schreib uns über
+      <a href="https://github.com/Circle-Projekt" target="_blank" rel="noopener">GitHub</a>
+      oder per E-Mail an <a href="mailto:hallo@example.com">hallo@example.com</a>.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>2026 Circle-Projekt · Studienprojekt</span>
+    <a href="#top">Nach oben ↑</a>
+  </div>
+</footer>
+
+</body>
+</html>
