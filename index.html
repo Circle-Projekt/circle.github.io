@@ -66,7 +66,7 @@
   .nav-links a:hover { color: var(--ink); text-decoration: none; }
 
   /* ---------- Hero ---------- */
-  header.hero { padding: 96px 0 80px; }
+  header.hero { padding-top: 96px; padding-bottom: 80px; }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -186,6 +186,17 @@
   .member h3 { font-size: 1rem; }
   .member p { font-size: 14px; margin-top: 2px; }
 
+  /* ---------- Partner ---------- */
+  .partners {
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 36px; margin-top: 36px;
+  }
+  .partners img {
+    height: 96px; max-width: 260px; object-fit: contain;
+    filter: grayscale(1); opacity: 0.75; transition: filter 0.15s ease, opacity 0.15s ease;
+  }
+  .partners img:hover { filter: none; opacity: 1; }
+
   /* ---------- Footer ---------- */
   footer {
     border-top: 1px solid var(--line); padding: 36px 0 48px;
@@ -195,10 +206,14 @@
     display: flex; flex-wrap: wrap; gap: 12px;
     justify-content: space-between; align-items: center;
   }
+  .footer-left {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: space-between; align-items: center;
+  }
 
   @media (max-width: 560px) {
     .nav-links { display: none; }
-    header.hero { padding: 64px 0 56px; }
+    header.hero { padding-top: 64px; padding-bottom: 56px; }
     .btn.ghost { margin-left: 0; margin-top: 10px; }
   }
 
@@ -234,7 +249,23 @@
   <a class="btn" href="https://github.com/Circle-Projekt" target="_blank" rel="noopener">Auf GitHub ansehen</a>
   <a class="btn ghost" href="#roadmap">Zur Roadmap</a>
 </header>
-
+<section id="partner">
+  <div class="wrap">
+    <div class="section-label">Beteiligte &amp; Unterstützer</div>
+    <h2>Wer Circle gestaltet</h2>
+    <div class="partners">
+      <a href="https://www.hs-flensburg.de" target="_blank" rel="noopener">
+        <img src="images/logos/logo_hs_flensburg.png" alt="Hochschule Flensburg">
+      </a>
+      <a href="https://tbz-flensburg.de/" target="_blank" rel="noopener">
+      <img src="images/logos/tbz.jpg" alt="TBZ Flensburg">
+      </a>
+      <a href="https://www.flensburg.de/" target="_blank" rel="noopener">
+      <img src="images/logos/stadt_flensburg.PNG" alt="Stadt Flensburg">
+      </a>
+    </div>
+  </div>
+</section>
 <section id="ueber">
   <div class="wrap">
     <div class="section-label">Über das Projekt</div>
@@ -392,10 +423,14 @@
   </div>
 </section>
 
+
+
 <footer>
   <div class="wrap footer-inner">
+    <div class="footer-left">
     <span>2026 Circle-Projekt · Studienprojekt</span>
     <a href="https://hs-flensburg.de/datenschutzerklaerung">Datenschutz</a>
+    </div>
     <a href="#top">Nach oben ↑</a>
   </div>
 </footer>
