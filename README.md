@@ -24,11 +24,14 @@ und ohne Installation.
 
 ## Inhalt dieses Repos
 
-| Datei | Zweck |
+| Datei / Ordner | Zweck |
 |---|---|
-| `index.html` | Die Projektwebsite (HTML + CSS in einer Datei, ohne Build-Schritt) |
+| `index.html` | Startseite: Projektvorstellung, Features, Roadmap, Team |
+| `galerie.html` | Bildergalerie rund um das Projekt |
+| `prototyp.html` | Klickbarer Prototyp: Check-in, Katalog & Matching, Kartenansicht |
 | `README.md` | Diese Datei |
 
+Jede Seite besteht aus HTML + CSS in einer Datei, ohne Build-Schritt.
 Die Seite wird über **GitHub Pages** direkt aus dem `main`-Branch ausgeliefert.
 Es gibt keinen Build-Prozess und keine Abhängigkeiten.
 

@@ -67,7 +67,7 @@
   .nav-links a.active { color: var(--accent); font-weight: 500; }
 
   /* ---------- Kopfbereich ---------- */
-  header.page-head { padding: 80px 0 56px; }
+  header.page-head { padding-top: 96px; padding-bottom: 80px; }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -77,15 +77,24 @@
     content: ""; width: 9px; height: 9px; border-radius: 50%;
     border: 2px solid var(--accent);
   }
-  .page-head h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 16px; }
-  .page-head p { color: var(--muted); max-width: 56ch; }
+  .page-head h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 700; max-width: 20ch; margin-bottom: 22px; }
+  .page-head p.lead { font-size: 1.18rem; color: var(--muted); max-width: 56ch; }
+
+  /* ---------- Sections ---------- */
+  section.gallery-section { padding: 48px 0; border-top: 1px solid var(--line); }
+  section.gallery-section:last-of-type { padding-bottom: 80px; }
+  .section-label {
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .gallery-section h2 { font-size: 1.5rem; margin-bottom: 10px; }
+  .gallery-section > .wrap > p { color: var(--muted); max-width: 62ch; margin-bottom: 26px; }
 
   /* ---------- Galerie ---------- */
   .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 16px;
-    padding-bottom: 80px;
   }
   .gallery figure {
     margin: 0;
@@ -105,6 +114,11 @@
     display: block; width: 100%; aspect-ratio: 4 / 3;
     object-fit: cover;
     transition: transform 0.25s ease;
+  }
+  .gallery img.portrait {
+    aspect-ratio: 412 / 915;
+    object-fit: contain;
+    background: #0b0d0c;
   }
   .gallery button.tile:hover img { transform: scale(1.03); }
   .gallery figcaption {
@@ -154,7 +168,7 @@
 
   @media (max-width: 560px) {
     .nav-links { gap: 14px; }
-    header.page-head { padding: 56px 0 40px; }
+    header.page-head { padding-top: 64px; padding-bottom: 56px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -174,6 +188,7 @@
       <a href="index.html#roadmap">Roadmap</a>
       <a href="index.html#team">Team</a>
       <a href="galerie.html" class="active" aria-current="page">Galerie</a>
+      <a href="prototyp.html">Prototyp</a>
     </div>
   </div>
 </nav>
@@ -181,20 +196,14 @@
 <header class="page-head wrap">
   <span class="eyebrow">Galerie</span>
   <h1>Einblicke ins Projekt</h1>
-  <p>
+  <p class="lead">
     Eindrücke aus dem Circle-Projekt: Tauschhütten, Prototypen, Skizzen
     und das Team bei der Arbeit.
   </p>
 </header>
 
-<main class="wrap">
-  <div class="gallery" id="gallery">
-    <!-- Die Bilder werden per JavaScript aus der Liste unten eingefügt. -->
-    <div class="gallery-empty" id="galleryEmpty">
-      Noch keine Bilder eingetragen. Bilder in den Ordner <code>images/</code> legen
-      und unten im Script in die Liste aufnehmen.
-    </div>
-  </div>
+<main id="sections">
+  <!-- Die Abschnitte und Bilder werden per JavaScript aus der Liste unten eingefügt. -->
 </main>
 
 <dialog class="lightbox" id="lightbox">
@@ -213,21 +222,78 @@
 </footer>
 
 <script>
-  const bilder = [
-    { src: "images/eingangstor.png", caption: "Standort der Tauschhütte in der Schleswiger Straße" },
-    { src: "images/panorama.png", caption: "Panorama des Recyclinghofs Schleswiger Straße" },
-    { src: "images/selfie.png", caption: "Besuch vor Ort für Interviews mit Nutzern der Tauschhütte" },
+  const sektionen = [
+    {
+      id: "vor-ort",
+      label: "Vor Ort",
+      title: "Die Tauschhütte in echt",
+      description: "Eindrücke vom Standort in der Schleswiger Straße und vom Team bei Interviews mit Nutzer:innen.",
+      bilder: [
+        { src: "images/eingangstor.png", caption: "Standort der Tauschhütte in der Schleswiger Straße" },
+        { src: "images/panorama.png", caption: "Panorama des Recyclinghofs Schleswiger Straße" },
+        { src: "images/selfie.png", caption: "Besuch vor Ort für Interviews mit Nutzern der Tauschhütte" },
+      ],
+    },
+    {
+      id: "prototyp",
+      label: "Prototyp",
+      title: "Screens aus dem klickbaren Prototyp",
+      description: "Vom Foto des Gegenstands über die KI-Analyse bis zum Katalog- und Karteneintrag. Details und Ablauf gibt es auf der Prototyp-Seite.",
+      portrait: true,
+      bilder: [
+        { src: "images/prototype/prototype-checkin-screen.png", caption: "Foto aufnehmen oder auswählen" },
+        { src: "images/prototype/prototype-checkin-image-uploaded.png", caption: "Bild wird zur Analyse hochgeladen" },
+        { src: "images/prototype/prototype-checkin-analyzed.png", caption: "KI schlägt Name, Kategorie und Zustand vor" },
+        { src: "images/prototype/prototype-checkin-step1.png", caption: "Check-in – Standort auswählen" },
+        { src: "images/prototype/prototype-checkin-step2.png", caption: "Check-in – Ablage bestätigen" },
+        { src: "images/prototype/prototype-checkin-step3.png", caption: "Check-in – Lagerplatz auswählen" },
+        { src: "images/prototype/prototype-catalogue.png", caption: "Katalogansicht mit Suche und Filter" },
+        { src: "images/prototype/prototype-swiper.png", caption: "Match-Ansicht im Swipe-Stil" },
+        { src: "images/prototype/prototype-checkout.png", caption: "Gegenstand aus dem Katalog entnehmen" },
+        { src: "images/prototype/prototype-map.png", caption: "Kartenansicht aller Standorte" },
+      ],
+    },
   ];
 
-  const gallery  = document.getElementById("gallery");
-  const emptyMsg = document.getElementById("galleryEmpty");
-  const lightbox = document.getElementById("lightbox");
-  const lbImg    = document.getElementById("lightboxImg");
-  const lbCap    = document.getElementById("lightboxCaption");
+  const sectionsRoot = document.getElementById("sections");
+  const lightbox     = document.getElementById("lightbox");
+  const lbImg         = document.getElementById("lightboxImg");
+  const lbCap         = document.getElementById("lightboxCaption");
 
-  if (bilder.length > 0) {
-    emptyMsg.remove();
-    for (const bild of bilder) {
+  for (const sektion of sektionen) {
+    const section = document.createElement("section");
+    section.className = "gallery-section";
+    section.id = sektion.id;
+
+    const wrap = document.createElement("div");
+    wrap.className = "wrap";
+
+    const label = document.createElement("div");
+    label.className = "section-label";
+    label.textContent = sektion.label;
+    wrap.appendChild(label);
+
+    const h2 = document.createElement("h2");
+    h2.textContent = sektion.title;
+    wrap.appendChild(h2);
+
+    if (sektion.description) {
+      const desc = document.createElement("p");
+      desc.textContent = sektion.description;
+      wrap.appendChild(desc);
+    }
+
+    const gallery = document.createElement("div");
+    gallery.className = "gallery";
+
+    if (sektion.bilder.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "gallery-empty";
+      empty.textContent = "Noch keine Bilder in diesem Abschnitt.";
+      gallery.appendChild(empty);
+    }
+
+    for (const bild of sektion.bilder) {
       const tile = document.createElement("button");
       tile.className = "tile";
       tile.type = "button";
@@ -238,6 +304,7 @@
       img.src = bild.src;
       img.alt = bild.caption || "";
       img.loading = "lazy";
+      if (sektion.portrait) img.classList.add("portrait");
       fig.appendChild(img);
 
       if (bild.caption) {
@@ -255,6 +322,10 @@
       });
       gallery.appendChild(tile);
     }
+
+    wrap.appendChild(gallery);
+    section.appendChild(wrap);
+    sectionsRoot.appendChild(section);
   }
 
   document.getElementById("lightboxClose").addEventListener("click", () => lightbox.close());

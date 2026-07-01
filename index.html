@@ -160,6 +160,46 @@
   .milestone h3 { font-size: 1.1rem; margin: 4px 0 6px; }
   .milestone p { font-size: 15.5px; }
 
+  .milestone-body {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  }
+  .milestone-text { flex: 1; min-width: 0; }
+
+  .milestone-text .btn {
+    margin: 20px 0;
+  }
+  .proto-preview {
+    display: flex; flex-direction: column; align-items: center;
+    flex-shrink: 0; margin: 0 0 0 20px;
+  }
+  .proto-stack {
+    position: relative; width: 260px; height: 360px;
+  }
+  .proto-stack a {
+    position: absolute; display: block; width: 130px;
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: 0 10px 22px rgba(24,28,27,0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .proto-stack img { display: block; width: 100%; aspect-ratio: 412 / 915; object-fit: cover; }
+  .proto-stack a:nth-child(1) { top: 0; left: 0; transform: rotate(-9deg); z-index: 1; }
+  .proto-stack a:nth-child(2) { top: 19px; left: 74px; transform: rotate(5deg); z-index: 2; }
+  .proto-stack a:nth-child(3) { top: 61px; left: 30px; transform: rotate(-4deg); z-index: 3; }
+  .proto-stack a:hover {
+    z-index: 4; box-shadow: 0 14px 28px rgba(24,28,27,0.26);
+  }
+  .proto-stack a:nth-child(1):hover { transform: rotate(-10deg) translateY(-4px); }
+  .proto-stack a:nth-child(2):hover { transform: rotate(6deg) translateY(-4px); }
+  .proto-stack a:nth-child(3):hover { transform: rotate(-1deg) translateY(-4px); }
+  .proto-preview .btn { padding: 9px 20px; font-size: 14.5px; white-space: nowrap; }
+
+  @media (max-width: 640px) {
+    .milestone-body { flex-direction: column; }
+    .proto-preview { width: 100%; margin-top: 20px; }
+  }
+
   .milestone-list {
   margin: 10px 0 0 18px;
   color: var(--muted);
@@ -233,6 +273,7 @@
       <a href="#roadmap">Roadmap</a>
       <a href="#team">Team</a>
       <a href="galerie.html">Galerie</a>
+      <a href="prototyp.html">Prototyp</a>
     </div>
   </div>
 </nav>
@@ -352,12 +393,31 @@
 
       <div class="milestone done">
         <span class="when">Meilenstein 1 · in Arbeit</span>
-        <h3>Minimal Viable Prototype</h3>
-        <p>Der erste Wurf: ein Proof of Concept, der zeigt, dass die Idee technisch funktioniert.</p>
-        <ul class="milestone-list">
-          <li>Proof of Concept für den Kern-Workflow (Foto → Erkennung → Inventar)</li>
-          <li>Machbarkeitstest der Abläufe an realistischen Beispielobjekten</li>
-        </ul>
+        <div class="milestone-body">
+          <div class="milestone-text">
+            <h3>Minimal Viable Prototype</h3>
+            <p>Der erste Wurf: ein Proof of Concept, der zeigt, dass die Idee technisch funktioniert.</p>
+            <ul class="milestone-list">
+              <li>Proof of Concept für den Kern-Workflow (Foto → Erkennung → Inventar)</li>
+              <li>Machbarkeitstest der Abläufe an realistischen Beispielobjekten</li>
+              <li>Erste klickbare Screens für Check-in, Katalog und Kartenansicht</li>
+            </ul>
+            <a class="btn" href="prototyp.html">Prototyp Übersicht →</a>
+          </div>
+          <div class="proto-preview">
+            <div class="proto-stack">
+              <a href="prototyp.html" aria-label="Prototyp: KI-Analyse ansehen">
+                <img src="images/prototype/prototype-checkin-analyzed.png" alt="" loading="lazy">
+              </a>
+              <a href="prototyp.html" aria-label="Prototyp: Katalogansicht ansehen">
+                <img src="images/prototype/prototype-catalogue.png" alt="" loading="lazy">
+              </a>
+              <a href="prototyp.html" aria-label="Prototyp: Kartenansicht ansehen">
+                <img src="images/prototype/prototype-map.png" alt="" loading="lazy">
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="milestone">
